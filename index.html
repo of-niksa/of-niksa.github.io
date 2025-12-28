@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Medical Templates</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  background: #f7f7f7;
+}
+#login {
+  max-width: 300px;
+  margin: 100px auto;
+  text-align: center;
+}
+#content {
+  display: none;
+}
+input, button {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+}
+.template {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+pre {
+  white-space: pre-wrap;
+}
+.copy {
+  margin-top: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="login">
+  <h2>Enter password</h2>
+  <input type="password" id="pw" autofocus>
+  <button onclick="check()">Enter</button>
+</div>
+
+<div id="content">
+  <h1>Medical Templates</h1>
+
+  <input type="text" id="search" placeholder="Search templates..." onkeyup="filterTemplates()">
+
+  <!-- TEMPLATE START -->
+  <div class="template">
+    <h3>Chest CT – Normal</h3>
+    <pre>
+No focal lung consolidation.
+No pleural effusion.
+Mediastinal structures are within normal limits.
+    </pre>
+    <button class="copy" onclick="copyText(this)">Copy</button>
+  </div>
+
+  <div class="template">
+    <h3>Brain CT – Acute Stroke</h3>
+    <pre>
+Hypodense area involving the right MCA territory,
+compatible with acute ischemic infarction.
+No hemorrhage detected.
+    </pre>
+    <button class="copy" onclick="copyText(this)">Copy</button>
+  </div>
+  <!-- TEMPLATE END -->
+
+</div>
+
+<script>
+const PASSWORD = "yourpassword"; // ← change this
+
+function check() {
+  if (document.getElementById("pw").value === PASSWORD) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  }
+}
+
+function copyText(btn) {
+  const text = btn.previousElementSibling.innerText;
+  navigator.clipboard.writeText(text);
+  btn.innerText = "Copied!";
+  setTimeout(() => btn.innerText = "Copy", 1000);
+}
+
+function filterTemplates() {
+  const q = document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".template").forEach(t => {
+    t.style.display = t.innerText.toLowerCase().includes(q) ? "" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
