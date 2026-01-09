@@ -1,88 +1,93 @@
 const PASSWORD_HASH = "5b05b73fc9f9ed6413a5d8d94d4a4416eb099bc914f09651190a612ee4d168e5";
 
-const loginDiv = document.getElementById("login");
-const contentDiv = document.getElementById("content");
-const pwInput = document.getElementById("pw");
-const loginBtn = document.getElementById("loginBtn");
-const errorMsg = document.getElementById("error");
+/* Login */
+const login = document.getElementById("login");
+const content = document.getElementById("content");
+const pw = document.getElementById("pw");
+const error = document.getElementById("error");
 
-// Password login
-loginBtn.addEventListener("click", checkPassword);
-pwInput.addEventListener("keyup", e => {
-  if (e.key === "Enter") checkPassword();
-});
+document.getElementById("loginBtn").onclick = checkPassword;
+pw.onkeyup = e => e.key === "Enter" && checkPassword();
 
 async function checkPassword() {
-  const entered = pwInput.value;
-  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(entered))
-    .then(buf => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join(""));
+  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(pw.value))
+    .then(b => Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2,"0")).join(""));
   if (hash === PASSWORD_HASH) {
-    loginDiv.style.display = "none";
-    contentDiv.style.display = "block";
-    pwInput.value = "";
-    errorMsg.style.display = "none";
-    resetLockTimer();
+    login.style.display = "none";
+    content.style.display = "block";
     loadTemplates();
+    resetLock();
   } else {
-    errorMsg.style.display = "block";
-    pwInput.value = "";
+    error.style.display = "block";
+    pw.value = "";
   }
 }
 
-// ----- LOAD TEMPLATES FROM JSON -----
+/* Templates */
 const list = document.getElementById("templateList");
 const title = document.getElementById("templateTitle");
-const content = document.getElementById("templateContent");
-const copyBtn = document.getElementById("copyBtn");
-const search = document.getElementById("search");
+const contentBox = document.getElementById("templateContent");
+const imagesBox = document.getElementById("templateImages");
 
-let templates = {}; // key = filename, value = template content
+const templates = {};
 
 async function loadTemplates() {
-  const indexResp = await fetch('templates/index.json');
-  const files = await indexResp.json();
+  const files = await fetch("templates/index.json").then(r => r.json());
+  for (const f of files) {
+    templates[f] = await fetch(`templates/${f}`).then(r => r.text());
 
-  for (const file of files) {
-    const resp = await fetch(`templates/${file}`);
-    const text = await resp.text();
-    templates[file] = text; // only content
-
-    // Sidebar shows filename as title
-    const li = document.createElement('li');
-    li.dataset.id = file;
-    li.textContent = file.replace('.txt','').replace(/_/g,' ');
+    const li = document.createElement("li");
+    li.textContent = f.replace(".txt","").replace(/_/g," ");
+    li.onclick = () => showTemplate(f, li);
     list.appendChild(li);
   }
 }
 
-// ----- TEMPLATE SELECTION -----
-list.addEventListener("click", e => {
-  if (e.target.tagName !== "LI") return;
-  document.querySelectorAll("li").forEach(li => li.classList.remove("active"));
-  e.target.classList.add("active");
-  title.innerText = e.target.textContent; // display file name
-  content.innerText = templates[e.target.dataset.id]; // copy only content
-});
+function showTemplate(file, li) {
+  document.querySelectorAll("li").forEach(x => x.classList.remove("active"));
+  li.classList.add("active");
 
-// ----- COPY BUTTON -----
-copyBtn.addEventListener("click", () => {
-  navigator.clipboard.writeText(content.innerText);
+  title.innerText = li.textContent;
+  contentBox.innerText = templates[file];
+  imagesBox.innerHTML = "";
+
+  const base = file.replace(".txt","");
+  loadImage(base);
+}
+
+/* Auto-load images */
+function loadImage(baseName) {
+  const imgPath = `templates/images/${baseName}.png`;
+  const img = new Image();
+
+  img.onload = () => {
+    imagesBox.appendChild(img);
+  };
+
+  // Do NOT assign onerror → prevents console spam
+  img.src = imgPath;
+}
+
+
+/* Copy */
+document.getElementById("copyBtn").onclick = () => {
+  navigator.clipboard.writeText(contentBox.innerText);
   copyBtn.innerText = "Copied!";
   setTimeout(() => copyBtn.innerText = "📋 Copy", 1000);
-});
+};
 
-// ----- SEARCH -----
-search.addEventListener("input", () => {
-  const q = search.value.toLowerCase();
+/* Search */
+document.getElementById("search").oninput = e => {
+  const q = e.target.value.toLowerCase();
   document.querySelectorAll("#templateList li").forEach(li => {
     li.style.display = li.textContent.toLowerCase().includes(q) ? "" : "none";
   });
-});
+};
 
-// ----- AUTO-LOCK 5 MINUTES -----
-let lockTimer;
-function resetLockTimer() {
-  clearTimeout(lockTimer);
-  lockTimer = setTimeout(() => location.reload(), 1*60*1000);
+/* Auto-lock */
+let lock;
+function resetLock() {
+  clearTimeout(lock);
+  lock = setTimeout(() => location.reload(), 3*60*1000);
 }
-["click","keydown","mousemove"].forEach(e => document.addEventListener(e, resetLockTimer));
+["mousemove","keydown","click"].forEach(e => document.addEventListener(e, resetLock));
