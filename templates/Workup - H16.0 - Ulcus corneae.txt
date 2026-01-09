@@ -1,4 +1,4 @@
-H16 Keratitis et ulcus corneae
+H16.0 Ulcus corneae
 
 1. Anamneza - kontaktna sociva? nocu? bazen, djakuzi? povreda ili strano telo? operacija oka? anestetici?
 
