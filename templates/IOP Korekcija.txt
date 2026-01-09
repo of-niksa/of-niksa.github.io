@@ -1,0 +1,4 @@
+Ehlersova tablica za korekciju IOP merenim aplanacionom tonometrijom.
+Srednja vrednost CCT - central corneal thickness pahimetrijom je oko 545µm.
+Tanja rožnjača se lakše aplanira - upotrebili smo manje snage za aplanaciju od realne.
+Deblja rožnjača se teže aplanira - upotrebili smo više snage za aplanaciju od realne.
