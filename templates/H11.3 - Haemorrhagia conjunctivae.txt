@@ -5,7 +5,10 @@ Tegobe pocele pre X dana prilikom mirovanja.
 Negira povredjivanje, trljanje oka, naprezanje, kasalj, povracanje ili podizanje teskog tereta.
 LA: negira hronicne bolesti, ne koristi NSAIL, antiagregacione ni antikoagulantne lekove.
 
-SpO: Ektropioniranjem gornjeg kapka ne uocavam strano telo. Cj - sufuzija nazalno/temporalno, C - providna, CA - mirna, L - providno.
+VOU: 1.0 s.c.
+
+SpOX: Ektropioniranjem gornjeg kapka ne uocavam strano telo. Cj - sufuzija nazalno/temporalno, C - providna, CA - mirna, L - providno.
+
 TOU: 
 
 Th: objasnjeno stanje, kontrolisati TA, glikemiju, preko izabranog lekara uraditi KKS, biohemiju, HBA1C.
