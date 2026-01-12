@@ -1,15 +1,12 @@
-Dolazi na pregled zbog osecaja stranog tela u X oku.
-
-Bol, crvenilo, peckanje, pojacano suzenje prisutni X dana unazad.
-Navodi da se povredio prilikom X
+Navodi da mu je upalo strano telo u oko prilikom rada sa brusilicom.
 
 VOU 1.0 s.c
 
-SPOU: Ektropioniranjem gorenjeg kapka ne uocavam strano telo. Cj - mirna.
-C - providna, uocava se metalno strano telo sa prstenom sideroze na X sati paracentralno.
-CA - Mirna, L - providno
+SPOU: Ektropioniranjem gorenjeg kapka ne uočavam strano telo. Vežnjača - mirna.
+C - providna, uočava se metalno strano telo sa prstenom sideroze na X sati periferno.
+CA - Mirna
 
-Remotio corporis alieni corneae et abrasionis siderosis!
+Ambulantno uklonjeno strano telo i načinjena je abrazija sideroze!
 
 Terapija za X oko:
     1. sol. Floxal 4x1 
@@ -19,5 +16,6 @@ Terapija za X oko:
 Terapija per os:
     1. tbl. Paracetamol 500mg na 8h
 
-Objasnjeno stanje.
 Kontrola sutra u interventnoj oftalmoloskoj ambulanti.
+
+dr Nikša Devčić
